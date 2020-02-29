@@ -34,6 +34,7 @@ void config_init(struct config *config)
 	config->keybind.game_move_east = CONFIG_DEFAULT_KEYBIND_GAME_MOVE_EAST;
 	config->keybind.game_move_south = CONFIG_DEFAULT_KEYBIND_GAME_MOVE_SOUTH;
 	config->keybind.game_move_west = CONFIG_DEFAULT_KEYBIND_GAME_MOVE_WEST;
+	config->keybind.game_rest = CONFIG_DEFAULT_KEYBIND_GAME_REST;
 	config->keybind.ui_up = CONFIG_DEFAULT_KEYBIND_UI_UP;
 	config->keybind.ui_left = CONFIG_DEFAULT_KEYBIND_UI_LEFT;
 	config->keybind.ui_down = CONFIG_DEFAULT_KEYBIND_UI_DOWN;
