@@ -19,8 +19,9 @@ void game_destroy(struct game *game)
 	free(game);
 }
 
-void game_init(struct game *game, struct world *world)
+void game_init(struct game *game, struct engine *engine, struct world *world)
 {
+	game->engine = engine;
 	game->world = world;
 	game->state = game_state_default;
 }

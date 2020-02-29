@@ -20,7 +20,7 @@ int main(void)
 	world = world_create();
 
 	engine_init(engine, game, input, render, world);
-	game_init(game, world);
+	game_init(game, engine, world);
 	input_init(input, world);
 	render_init(render, world);
 	world_init(world);
