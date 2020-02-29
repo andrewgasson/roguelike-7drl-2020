@@ -5,4 +5,6 @@
 
 void render_layer_player(struct render *render);
 
+void render_layer_walls(struct render *render);
+
 #endif

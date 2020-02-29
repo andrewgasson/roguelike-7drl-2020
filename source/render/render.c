@@ -33,6 +33,7 @@ void render_update(struct render *render)
 	terminal_clear();
 
 	/* Draw */
+	render_layer_walls(render);
 	render_layer_player(render);
 
 	/* Output */

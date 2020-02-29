@@ -5,12 +5,15 @@
 #include "world/compass.h"
 #include "world/glyph.h"
 #include "world/input_action.h"
+#include "world/map.h"
+#include "world/position.h"
 
 struct world {
 	enum input_game_action input_game_action;
 	enum input_ui_action input_ui_action;
 	enum input_system_action input_system_action;
 	struct being player;
+	struct map map;
 };
 
 struct world *world_create(void);
