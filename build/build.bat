@@ -14,6 +14,7 @@ set exe_output_path=%binary_directory%\%exe_name%
 
 set source_files=^
 	%source_directory%\*.c ^
+	%source_directory%\config\*.c ^
 	%source_directory%\engine\*.c ^
 	%source_directory%\game\*.c ^
 	%source_directory%\game\game_state\*.c ^
