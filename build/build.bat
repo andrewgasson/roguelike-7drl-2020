@@ -7,7 +7,7 @@ set compiler_flags=-Wall
 
 set root_directory=..
 set binary_directory=%root_directory%\binary
-set extern_directory=%root_directory%\extern
+set external_directory=%root_directory%\external
 set source_directory=%root_directory%\source
 
 set exe_output_path=%binary_directory%\%exe_name%
@@ -16,6 +16,9 @@ set source_files=^
 	%source_directory%\*.c
 
 %compiler% ^
-%compiler_flags% ^
--o %exe_output_path% ^
-%source_files%
+	%compiler_flags% ^
+	-o %exe_output_path% ^
+	-I%external_directory% ^
+	%source_files% ^
+	-L. ^
+	-l:%binary_directory%\BearLibTerminal.dll
