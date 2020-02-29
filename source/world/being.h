@@ -2,10 +2,10 @@
 #define BEING_H
 
 #include "world/glyph.h"
+#include "world/position.h"
 
 struct being {
-	int x;
-	int y;
+	struct position position;
 	struct glyph glyph;
 };
 

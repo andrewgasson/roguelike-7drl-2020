@@ -23,8 +23,8 @@ void world_init(struct world *world)
 	world->input_ui_action = INPUT_UI_ACTION_NONE;
 	world->input_system_action = INPUT_SYSTEM_ACTION_NONE;
 
-	world->player.x = 0;
-	world->player.y = 0;
+	world->player.position.x = 0;
+	world->player.position.y = 0;
 	world->player.glyph.background = color_from_argb(255, 0, 128, 128);
 	world->player.glyph.foreground = color_from_argb(255, 255, 0, 0);
 	world->player.glyph.symbol = '@';
