@@ -13,12 +13,19 @@ set source_directory=%root_directory%\source
 set exe_output_path=%binary_directory%\%exe_name%
 
 set source_files=^
-	%source_directory%\*.c
+	%source_directory%\*.c ^
+	%source_directory%\engine\*.c ^
+	%source_directory%\game\*.c ^
+	%source_directory%\input\*.c ^
+	%source_directory%\render\*.c ^
+	%source_directory%\render\render_layer\*.c ^
+	%source_directory%\world\*.c
 
 %compiler% ^
 	%compiler_flags% ^
 	-o %exe_output_path% ^
 	-I%external_directory% ^
+	-I%source_directory% ^
 	%source_files% ^
 	-L. ^
 	-l:%binary_directory%\BearLibTerminal.dll
