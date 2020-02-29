@@ -2,10 +2,14 @@
 #define WORLD_H
 
 #include "world/being.h"
+#include "world/compass.h"
 #include "world/glyph.h"
+#include "world/input_action.h"
 
 struct world {
-	int game_input;
+	enum input_game_action input_game_action;
+	enum input_ui_action input_ui_action;
+	enum input_system_action input_system_action;
 	struct being player;
 };
 

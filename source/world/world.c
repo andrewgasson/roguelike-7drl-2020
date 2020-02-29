@@ -19,7 +19,9 @@ void world_destroy(struct world *world)
 
 void world_init(struct world *world)
 {
-	world->game_input = TK_INPUT_NONE;
+	world->input_game_action = INPUT_GAME_ACTION_NONE;
+	world->input_ui_action = INPUT_UI_ACTION_NONE;
+	world->input_system_action = INPUT_SYSTEM_ACTION_NONE;
 
 	world->player.x = 0;
 	world->player.y = 0;

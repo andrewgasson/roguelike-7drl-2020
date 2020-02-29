@@ -16,6 +16,7 @@ set source_files=^
 	%source_directory%\*.c ^
 	%source_directory%\engine\*.c ^
 	%source_directory%\game\*.c ^
+	%source_directory%\game\player_action\*.c ^
 	%source_directory%\input\*.c ^
 	%source_directory%\render\*.c ^
 	%source_directory%\render\render_layer\*.c ^

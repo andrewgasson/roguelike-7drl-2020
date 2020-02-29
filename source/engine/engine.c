@@ -42,7 +42,7 @@ void engine_start(struct engine *engine)
 		input_update(engine->input);
 		game_update(engine->game);
 
-		if (engine->world->game_input == TK_CLOSE)
+		if (engine->world->input_system_action == INPUT_SYSTEM_ACTION_QUIT)
 			engine->running = 0;
 	}
 }
