@@ -5,6 +5,7 @@
 
 struct game {
 	struct world *world;
+	void (*state)(struct game *game);
 };
 
 struct game *game_create(void);
