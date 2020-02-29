@@ -4,8 +4,6 @@
 #include "config/keybind.h"
 
 #define CONFIG_DEFAULT_FILEPATH "config.txt"
-#define CONFIG_MAX_GAME_KEYBINDS 32
-#define CONFIG_MAX_UI_KEYBINDS 32
 
 struct config {
 	struct {
