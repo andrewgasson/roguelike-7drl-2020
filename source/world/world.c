@@ -1,6 +1,6 @@
 #include "world.h"
 
-#include "game/map_generate/map_generate.h" /* TODO: TEMP */
+#include "game/map_draw/map_draw.h" /* TODO: TEMP */
 
 #include "BearLibTerminal.h"
 #include <stdlib.h>
@@ -32,6 +32,5 @@ void world_init(struct world *world)
 	world->player.glyph.symbol = '@';
 
 	/* map_clear(&world->map); */
-	/* TODO: TEMP */
-	map_generate_demo_box(&world->map);
+	map_draw_demo_box(&world->map); /* TODO: TEMP */
 }

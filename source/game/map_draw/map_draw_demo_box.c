@@ -1,6 +1,6 @@
-#include "game/map_generate/map_generate.h"
+#include "game/map_draw/map_draw.h"
 
-void map_generate_demo_box(struct map *map)
+void map_draw_demo_box(struct map *map)
 {
 	int x;
 	int y;
