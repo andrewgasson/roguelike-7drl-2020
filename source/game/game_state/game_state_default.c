@@ -1,9 +1,16 @@
 #include "game/game_state/game_state.h"
 
 #include "game/player_action/player_action.h"
+#include <stddef.h>
 
 static void on_update(struct game *game)
 {
+	if (game->input->ui_action == INPUT_UI_ACTION_OPEN_PAUSE_MENU) {
+		/* TEMP: Example of opening closing a menu. */
+		game_set_state(game, &GAME_STATE_MAIN_MENU);
+		return;
+	}
+
 	switch (game->input->game_action) {
 	case INPUT_GAME_ACTION_MOVE_NORTH:
 		player_action_move(game->world, COMPASS_NORTH);
@@ -25,4 +32,4 @@ static void on_update(struct game *game)
 	}
 }
 
-const struct game_state game_state_default = { NULL, on_update, NULL };
+const struct game_state GAME_STATE_DEFAULT = { NULL, on_update, NULL };

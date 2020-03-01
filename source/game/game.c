@@ -21,10 +21,12 @@ void game_destroy(struct game *game)
 void game_init(
 	struct game *game, 
 	struct engine *engine,
+	struct gui *gui,
 	struct input *input,
 	struct world *world)
 {
 	game->engine = engine;
+	game->gui = gui;
 	game->input = input;
 	game->world = world;
 	game->state = NULL;

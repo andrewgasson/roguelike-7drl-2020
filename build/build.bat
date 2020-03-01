@@ -20,8 +20,10 @@ set source_files=^
 	%source_directory%\game\game_state\*.c ^
 	%source_directory%\game\map_draw\*.c ^
 	%source_directory%\game\player_action\*.c ^
+	%source_directory%\gui\*.c ^
 	%source_directory%\input\*.c ^
 	%source_directory%\render\*.c ^
+	%source_directory%\render\render_gui\*.c ^
 	%source_directory%\render\render_layer\*.c ^
 	%source_directory%\world\*.c
 

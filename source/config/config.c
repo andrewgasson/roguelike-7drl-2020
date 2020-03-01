@@ -12,7 +12,8 @@ const struct keybind CONFIG_DEFAULT_KEYBIND_UI_UP = { 0, 0, TK_UP, TK_KP_8 };
 const struct keybind CONFIG_DEFAULT_KEYBIND_UI_LEFT = { 0, 0, TK_LEFT, TK_KP_4 };
 const struct keybind CONFIG_DEFAULT_KEYBIND_UI_DOWN = { 0, 0, TK_DOWN, TK_KP_2 };
 const struct keybind CONFIG_DEFAULT_KEYBIND_UI_RIGHT = { 0, 0, TK_RIGHT, TK_KP_6 };
-const struct keybind CONFIG_DEFAULT_KEYBIND_UI_SUBMIT = { 0, 0, TK_ENTER, TK_KP_0 };
+const struct keybind CONFIG_DEFAULT_KEYBIND_UI_SUBMIT = { 0, 0, TK_ENTER, TK_KP_ENTER };
+const struct keybind CONFIG_DEFAULT_KEYBIND_UI_OPEN_PAUSE_MENU = { 0, 0, TK_ESCAPE, TK_KP_MINUS };
 
 struct config *config_create(void)
 {
@@ -40,6 +41,7 @@ void config_init(struct config *config)
 	config->keybind.ui_down = CONFIG_DEFAULT_KEYBIND_UI_DOWN;
 	config->keybind.ui_right = CONFIG_DEFAULT_KEYBIND_UI_RIGHT;
 	config->keybind.ui_submit = CONFIG_DEFAULT_KEYBIND_UI_SUBMIT;
+	config->keybind.ui_open_pause_menu = CONFIG_DEFAULT_KEYBIND_UI_OPEN_PAUSE_MENU;
 }
 
 void config_load(struct config *config, const char *filepath)

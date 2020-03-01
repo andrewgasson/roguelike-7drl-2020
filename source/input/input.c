@@ -93,4 +93,6 @@ void input_update(struct input *input)
 		input->ui_action = INPUT_UI_ACTION_RIGHT;
 	else if (input_keybind_pressed(&input->config->keybind.ui_submit, &key_state))
 		input->ui_action = INPUT_UI_ACTION_SUBMIT;
+	else if (input_keybind_pressed(&input->config->keybind.ui_open_pause_menu, &key_state))
+		input->ui_action = INPUT_UI_ACTION_OPEN_PAUSE_MENU;
 }

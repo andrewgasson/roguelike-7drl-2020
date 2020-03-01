@@ -11,6 +11,7 @@ struct game_state {
 	void (*stop)(struct game *game);
 };
 
-const struct game_state game_state_default;
+const struct game_state GAME_STATE_DEFAULT;
+const struct game_state GAME_STATE_MAIN_MENU;
 
 #endif

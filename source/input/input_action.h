@@ -15,12 +15,15 @@ enum input_game_action {
 enum input_ui_action {
 	INPUT_UI_ACTION_NONE,
 
-	/* Actions */
+	/* Actions: controls */
 	INPUT_UI_ACTION_UP,
 	INPUT_UI_ACTION_LEFT,
 	INPUT_UI_ACTION_DOWN,
 	INPUT_UI_ACTION_RIGHT,
-	INPUT_UI_ACTION_SUBMIT
+	INPUT_UI_ACTION_SUBMIT,
+
+	/* Actions: menus */
+	INPUT_UI_ACTION_OPEN_PAUSE_MENU
 };
 
 enum input_system_action {
