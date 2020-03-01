@@ -29,6 +29,8 @@ int main(void)
 	render_init(render, world);
 	world_init(world);
 
+	game_set_state(game, &game_state_default);
+
 	terminal_open();
 	terminal_refresh();
 

@@ -2,7 +2,7 @@
 
 #include "game/player_action/player_action.h"
 
-void game_state_default(struct game *game)
+static void on_update(struct game *game)
 {
 	switch (game->input->game_action) {
 	case INPUT_GAME_ACTION_MOVE_NORTH:
@@ -24,3 +24,5 @@ void game_state_default(struct game *game)
 		break;
 	}
 }
+
+const struct game_state game_state_default = { NULL, on_update, NULL };

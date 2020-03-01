@@ -2,6 +2,7 @@
 #define GAME_H
 
 #include "engine/engine.h"
+#include "game/game_state/game_state.h"
 #include "input/input.h"
 #include "world/world.h"
 
@@ -9,7 +10,7 @@ struct game {
 	struct engine *engine;
 	struct input *input;
 	struct world *world;
-	void (*state)(struct game *game);
+	const struct game_state *state;
 };
 
 struct game *game_create(void);
@@ -21,6 +22,8 @@ void game_init(
 	struct engine *engine,
 	struct input *input,
 	struct world *world);
+
+void game_set_state(struct game *game, const struct game_state *state);
 
 void game_update(struct game *game);
 

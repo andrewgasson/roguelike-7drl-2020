@@ -27,7 +27,18 @@ void game_init(
 	game->engine = engine;
 	game->input = input;
 	game->world = world;
-	game->state = game_state_default;
+	game->state = NULL;
+}
+
+void game_set_state(struct game *game, const struct game_state *state)
+{
+	if (game->state && game->state->stop)
+		game->state->stop(game);
+
+	game->state = state;
+
+	if (game->state->start)
+		game->state->start(game);
 }
 
 void game_update(struct game *game)
@@ -45,5 +56,6 @@ void game_update(struct game *game)
 	/* TODO: Update camera position. */
 
 	/* Update game state. */
-	game->state(game);
+	if (game->state->update)
+		game->state->update(game);
 }
