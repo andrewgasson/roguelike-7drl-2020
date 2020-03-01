@@ -32,24 +32,32 @@ void render_init(
 
 void render_update(struct render *render)
 {
-	/* Reset */
-	terminal_layer(0);
+	/* Reset colors and layers */
 	terminal_bkcolor(BLACK_COLOR);
 	terminal_color(WHITE_COLOR);
+	terminal_layer(1);
+	terminal_clear();
+	terminal_layer(0);
 	terminal_clear();
 
-	/* Draw game */
-	render_layer_walls(render);
-	render_layer_player(render);
-
-	/* Setup for GUI */
+	/* Setup GUI layer */
 	terminal_layer(1);
-	terminal_bkcolor(BLACK_COLOR);
-	terminal_color(WHITE_COLOR);
 
 	/* Draw GUI */
 	if (render->gui->main_menu.enabled)
 		render_gui_main_menu(render);
+
+	/* Only render game layer if enabled GUI is non-blocking. */
+	if (!gui_game_render_disabled(render->gui)) {
+		/* Setup game layer */
+		terminal_layer(0);
+		terminal_bkcolor(BLACK_COLOR);
+		terminal_color(WHITE_COLOR);
+
+		/* Draw game */
+		render_layer_walls(render);
+		render_layer_player(render);
+	}
 
 	/* Output */
 	terminal_refresh();

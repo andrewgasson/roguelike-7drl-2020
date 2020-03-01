@@ -13,4 +13,6 @@ void gui_destroy(struct gui *gui);
 
 void gui_init(struct gui *gui);
 
+int gui_game_render_disabled(struct gui *gui);
+
 #endif
