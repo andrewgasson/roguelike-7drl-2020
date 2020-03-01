@@ -42,62 +42,55 @@ void input_destroy(struct input *input)
 	free(input);
 }
 
-void input_init(
-	struct input *input,
-	struct config *config,
-	struct world *world)
+void input_init(struct input *input, struct config *config)
 {
 	input->config = config;
-	input->world = world;
+	input->game_action = INPUT_GAME_ACTION_NONE;
+	input->ui_action = INPUT_UI_ACTION_NONE;
+	input->system_action = INPUT_SYSTEM_ACTION_NONE;
 }
 
 void input_update(struct input *input)
 {
-	enum input_game_action game_action;
-	enum input_ui_action ui_action;
-	enum input_system_action system_action;
 	struct input_key_state key_state;
 
-	game_action = INPUT_GAME_ACTION_NONE;
-	ui_action = INPUT_UI_ACTION_NONE;
-	system_action = INPUT_SYSTEM_ACTION_NONE;
+	/* Clear actions. */
+	input->game_action = INPUT_GAME_ACTION_NONE;
+	input->ui_action = INPUT_UI_ACTION_NONE;
+	input->system_action = INPUT_SYSTEM_ACTION_NONE;
 
+	/* Store input state. */
 	key_state.key_press = terminal_read();
 	key_state.control_held = terminal_state(TK_CONTROL);
 	key_state.shift_held = terminal_state(TK_SHIFT);
 
-	/* Window close pressed. */
+	/* Window close button pressed. */
 	if (key_state.key_press == TK_CLOSE) {
-		system_action = INPUT_SYSTEM_ACTION_QUIT;
-		goto finalize_input;
+		input->system_action = INPUT_SYSTEM_ACTION_QUIT;
+		return;
 	}
 
 	/* Set game actions. */
 	if (input_keybind_pressed(&input->config->keybind.game_move_north, &key_state))
-		game_action = INPUT_GAME_ACTION_MOVE_NORTH;
+		input->game_action = INPUT_GAME_ACTION_MOVE_NORTH;
 	else if (input_keybind_pressed(&input->config->keybind.game_move_east, &key_state))
-		game_action = INPUT_GAME_ACTION_MOVE_EAST;
+		input->game_action = INPUT_GAME_ACTION_MOVE_EAST;
 	else if (input_keybind_pressed(&input->config->keybind.game_move_south, &key_state))
-		game_action = INPUT_GAME_ACTION_MOVE_SOUTH;
+		input->game_action = INPUT_GAME_ACTION_MOVE_SOUTH;
 	else if (input_keybind_pressed(&input->config->keybind.game_move_west, &key_state))
-		game_action = INPUT_GAME_ACTION_MOVE_WEST;
+		input->game_action = INPUT_GAME_ACTION_MOVE_WEST;
 	else if (input_keybind_pressed(&input->config->keybind.game_rest, &key_state))
-		game_action = INPUT_GAME_ACTION_REST;
+		input->game_action = INPUT_GAME_ACTION_REST;
 
 	/* Set UI actions. */
 	if (input_keybind_pressed(&input->config->keybind.ui_up, &key_state))
-		ui_action = INPUT_UI_ACTION_UP;
+		input->ui_action = INPUT_UI_ACTION_UP;
 	else if (input_keybind_pressed(&input->config->keybind.ui_left, &key_state))
-		ui_action = INPUT_UI_ACTION_LEFT;
+		input->ui_action = INPUT_UI_ACTION_LEFT;
 	else if (input_keybind_pressed(&input->config->keybind.ui_down, &key_state))
-		ui_action = INPUT_UI_ACTION_DOWN;
+		input->ui_action = INPUT_UI_ACTION_DOWN;
 	else if (input_keybind_pressed(&input->config->keybind.ui_right, &key_state))
-		ui_action = INPUT_UI_ACTION_RIGHT;
+		input->ui_action = INPUT_UI_ACTION_RIGHT;
 	else if (input_keybind_pressed(&input->config->keybind.ui_submit, &key_state))
-		ui_action = INPUT_UI_ACTION_SUBMIT;
-
-finalize_input:
-	input->world->input_game_action = game_action;
-	input->world->input_ui_action = ui_action;
-	input->world->input_system_action = system_action;
+		input->ui_action = INPUT_UI_ACTION_SUBMIT;
 }

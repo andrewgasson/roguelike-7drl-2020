@@ -23,9 +23,9 @@ int main(void)
 	world = world_create();
 
 	config_init(config);
-	engine_init(engine, game, input, render, world);
-	game_init(game, engine, world);
-	input_init(input, config, world);
+	engine_init(engine, game, input, render);
+	game_init(game, engine, input, world);
+	input_init(input, config);
 	render_init(render, world);
 	world_init(world);
 

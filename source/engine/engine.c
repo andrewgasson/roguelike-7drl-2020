@@ -20,18 +20,17 @@ void engine_init(
 	struct engine *engine,
 	struct game *game,
 	struct input *input,
-	struct render *render,
-	struct world *world)
+	struct render *render)
 {
-	engine->running = 0;
 	engine->game = game;
 	engine->input = input;
 	engine->render = render;
-	engine->world = world;
+	engine->running = 0;
 }
 
 void engine_start(struct engine *engine)
 {
+	/* Avoid any possibility of accidental recursion. */
 	if (engine->running)
 		return;
 
@@ -41,9 +40,6 @@ void engine_start(struct engine *engine)
 		render_update(engine->render);
 		input_update(engine->input);
 		game_update(engine->game);
-
-		if (engine->world->input_system_action == INPUT_SYSTEM_ACTION_QUIT)
-			engine->running = 0;
 	}
 }
 

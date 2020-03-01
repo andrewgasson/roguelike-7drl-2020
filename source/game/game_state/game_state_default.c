@@ -4,7 +4,7 @@
 
 void game_state_default(struct game *game)
 {
-	switch (game->world->input_game_action) {
+	switch (game->input->game_action) {
 	case INPUT_GAME_ACTION_MOVE_NORTH:
 		player_action_move(game->world, COMPASS_NORTH);
 		break;

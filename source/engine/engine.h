@@ -4,14 +4,12 @@
 #include "game/game.h"
 #include "input/input.h"
 #include "render/render.h"
-#include "world/world.h"
 
 struct engine {
-	int running;
 	struct game *game;
 	struct input *input;
 	struct render *render;
-	struct world *world;
+	int running;
 };
 
 struct engine *engine_create(void);
@@ -22,8 +20,7 @@ void engine_init(
 	struct engine *engine,
 	struct game *game,
 	struct input *input,
-	struct render *render,
-	struct world *world);
+	struct render *render);
 
 void engine_start(struct engine *engine);
 

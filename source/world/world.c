@@ -21,10 +21,6 @@ void world_destroy(struct world *world)
 
 void world_init(struct world *world)
 {
-	world->input_game_action = INPUT_GAME_ACTION_NONE;
-	world->input_ui_action = INPUT_UI_ACTION_NONE;
-	world->input_system_action = INPUT_SYSTEM_ACTION_NONE;
-
 	world->player.position.x = MAP_WIDTH / 2;
 	world->player.position.y = MAP_HEIGHT / 2;
 	world->player.glyph.background = color_from_argb(255, 0, 128, 128);
