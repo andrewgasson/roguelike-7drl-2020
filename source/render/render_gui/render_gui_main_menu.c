@@ -40,7 +40,7 @@ void render_gui_main_menu(struct render *render)
 
 	/* Draw title placard. */
 	padding_left = screen_width - GOLDBAND_TITLE_WIDTH - 2;
-	padding_top = 2;
+	padding_top = 1;
 
 	terminal_layer(0);
 	terminal_bkcolor(color_from_name("amber"));
@@ -48,9 +48,14 @@ void render_gui_main_menu(struct render *render)
 	terminal_clear_area(padding_left - 2, 0, screen_width, screen_height);
 	terminal_layer(1);
 
+	terminal_print(padding_left, padding_top, "THE");
+	padding_top++;
+
 	for (y = 0; y < GOLDBAND_TITLE_HEIGHT; y++) {
 		terminal_print(padding_left, y + padding_top, GOLDBAND_TITLE[y]);
 	}
+
+	terminal_print(screen_width - 9, padding_top + GOLDBAND_TITLE_HEIGHT, "PROJECT");
 
 	/* Draw game jam info. */
 	padding_left = screen_width - 2 - strlen(CONFIG_GAME_JAM);
