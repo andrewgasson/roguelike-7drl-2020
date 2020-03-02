@@ -5,6 +5,11 @@
 
 #define CONFIG_DEFAULT_FILEPATH "config.txt"
 
+#define CONFIG_GAME_AUTHOR_UPPERCASE "ANDREW GASSON"
+#define CONFIG_GAME_JAM "7DRL 2020"
+#define CONFIG_GAME_NAME_UPPERCASE "THE GOLDBAND PROJECT"
+#define CONFIG_GAME_VERSION "0.3"
+
 struct config {
 	struct {
 		struct keybind game_move_north;
