@@ -17,7 +17,7 @@ struct config {
 		struct keybind ui_down;
 		struct keybind ui_right;
 		struct keybind ui_submit;
-		struct keybind ui_open_pause_menu;
+		struct keybind ui_toggle_pause_menu;
 	} keybind;
 };
 
@@ -31,7 +31,7 @@ const struct keybind CONFIG_DEFAULT_KEYBIND_UI_LEFT;
 const struct keybind CONFIG_DEFAULT_KEYBIND_UI_DOWN;
 const struct keybind CONFIG_DEFAULT_KEYBIND_UI_RIGHT;
 const struct keybind CONFIG_DEFAULT_KEYBIND_UI_SUBMIT;
-const struct keybind CONFIG_DEFAULT_KEYBIND_UI_OPEN_PAUSE_MENU;
+const struct keybind CONFIG_DEFAULT_KEYBIND_UI_TOGGLE_PAUSE_MENU;
 
 struct config *config_create(void);
 

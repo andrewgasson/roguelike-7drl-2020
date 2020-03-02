@@ -23,7 +23,7 @@ enum input_ui_action {
 	INPUT_UI_ACTION_SUBMIT,
 
 	/* Actions: menus */
-	INPUT_UI_ACTION_OPEN_PAUSE_MENU
+	INPUT_UI_ACTION_TOGGLE_PAUSE_MENU
 };
 
 enum input_system_action {

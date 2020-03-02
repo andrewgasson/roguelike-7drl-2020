@@ -2,9 +2,11 @@
 #define GUI_H
 
 #include "gui/gui_main_menu.h"
+#include "gui/gui_pause_menu.h"
 
 struct gui {
 	struct gui_main_menu main_menu;
+	struct gui_pause_menu pause_menu;
 };
 
 struct gui *gui_create(void);

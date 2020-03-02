@@ -4,8 +4,8 @@
 
 static void on_start(struct game *game)
 {
-	game->gui->main_menu.cursor_state = GUI_MAIN_MENU_CURSOR_STATE_DEFAULT;
 	game->gui->main_menu.enabled = 1;
+	game->gui->main_menu.cursor_state = GUI_MAIN_MENU_CURSOR_STATE_DEFAULT;
 }
 
 static void on_update(struct game *game)
@@ -19,8 +19,8 @@ static void on_update(struct game *game)
 		break;
 	case INPUT_UI_ACTION_SUBMIT:
 		switch (game->gui->main_menu.cursor_state) {
-		case GUI_MAIN_MENU_CURSOR_STATE_PLAY:
-			game_set_state(game, &GAME_STATE_DEFAULT);
+		case GUI_MAIN_MENU_CURSOR_STATE_NEW_GAME:
+			game_set_state(game, &GAME_STATE_NEW_GAME);
 			break;
 		case GUI_MAIN_MENU_CURSOR_STATE_QUIT:
 			engine_stop(game->engine);
