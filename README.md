@@ -6,7 +6,7 @@ _The Goldband Project_ is a traditional roguelike made for the 7DRL challenge 20
 
 To check out the 7DRL challenge, go here: <https://7drl.com/>.
 
-## Plan
+## Game Design Plan
 ### What is the goal?
 To earn enough money to purchase a retirement home and retire.
 
@@ -31,6 +31,7 @@ Currently, the character can move around a box, and will collide with the box's 
 ## Log
 - Day #1 was primarily about setting up the code in preparation for the gameplay mechanics. However, there really wasn't a "game" at this point.
 - Day #2 focused adding GUI state and rendering, cleaning the code architecture, and clarifying the gameplay (via private game design document based on gameplay.md in the document folder).
+- Day #3 focused on creating a proper main menu and pause menu, preparing for GUI prompts (also known as modals or dialogs in some systems), and changing game state to use a push and pop stack, rather than just a set, which is necessary for deep menu hierarchies, and retaining their state (for example: default game state <-> pause menu <-> setting menu <-> sub-setting menu). Also cleaned up the README.
 
 ## TODO
 - Menu
