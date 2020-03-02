@@ -6,7 +6,7 @@
 static void on_update(struct game *game)
 {
 	if (game->input->ui_action == INPUT_UI_ACTION_TOGGLE_PAUSE_MENU) {
-		game_set_state(game, &GAME_STATE_PAUSE_MENU);
+		game_push_state(game, &GAME_STATE_PAUSE_MENU);
 		return;
 	}
 

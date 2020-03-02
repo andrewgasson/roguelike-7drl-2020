@@ -25,22 +25,99 @@ void game_init(
 	struct input *input,
 	struct world *world)
 {
+	int i;
+
 	game->engine = engine;
 	game->gui = gui;
 	game->input = input;
 	game->world = world;
-	game->state = NULL;
+	game->top_state_index = 0;
+
+	for (i = 0; i < GAME_MAX_STATE_COUNT; i++)
+		game->state[i] = NULL;
 }
 
+/* Clears all state layers before setting the bottom state. Each state layer 
+ * will have their stop function called (if not NULL).
+ */
 void game_set_state(struct game *game, const struct game_state *state)
 {
-	if (game->state && game->state->stop)
-		game->state->stop(game);
+	int i;
 
-	game->state = state;
+	/* Remove all states, including the base state. */
+	for (i = GAME_MAX_STATE_COUNT - 1; i >= 0; i--) {
+		if (game->state[i]) {
+			if (game->state[i]->stop)
+				game->state[i]->stop(game);
 
-	if (game->state->start)
-		game->state->start(game);
+			game->state[i] = NULL;
+		}
+	}
+
+	game->top_state_index = 0;
+
+	/* If the new state is NULL, we don't need to do anything. */
+	if (state == NULL)
+		return;
+
+	game->state[0] = state;
+
+	if (game->state[0]->start)
+		game->state[0]->start(game);
+}
+
+/* Pushes the state onto the stack. Returns 0 if the stack as full, and 1 
+ * otherwise.
+ */
+int game_push_state(struct game *game, const struct game_state *state)
+{
+	/* Stack is full, do nothing. */
+	if (game->top_state_index >= GAME_MAX_STATE_COUNT - 1)
+		return 0;
+	
+	game->top_state_index++;
+	game->state[game->top_state_index] = state;
+
+	if (game->state[game->top_state_index]->start)
+		game->state[game->top_state_index]->start(game);
+
+	return 1;
+}
+
+/* Removes a state from the stack. If there is a remaining state on the stack 
+ * (the base state does not count), returns 1, otherwise, returns 0. If you 
+ * want to pop all states, and set the base, you should just use 
+ * game_set_state(). 
+ */
+int game_pop_state(struct game *game)
+{
+	if (game->top_state_index > 0) {
+		if (game->state[game->top_state_index]->stop)
+			game->state[game->top_state_index]->stop(game);
+
+		game->state[game->top_state_index] = NULL;
+		game->top_state_index--;
+
+		return 1;
+	}
+
+	return 0;
+}
+
+/* Returns the next highest state on the stack (not the current stack, but the 
+ * next one if popped), or NULL if the next state is the base state.
+ */
+const struct game_state *game_peek_state(struct game *game)
+{
+	if (game->top_state_index > 0)
+		return game->state[game->top_state_index - 1];
+
+	return NULL;
+}
+
+const struct game_state *game_current_state(struct game *game)
+{
+	return game->state[game->top_state_index];
 }
 
 void game_update(struct game *game)
@@ -57,7 +134,7 @@ void game_update(struct game *game)
 	
 	/* TODO: Update camera position. */
 
-	/* Update game state. */
-	if (game->state->update)
-		game->state->update(game);
+	/* Update top game state. */
+	if (game->state[game->top_state_index]->update)
+		game->state[game->top_state_index]->update(game);
 }

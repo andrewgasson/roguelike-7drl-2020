@@ -20,12 +20,18 @@ void gui_init(struct gui *gui)
 {
 	gui->main_menu.enabled = 0;
 	gui->main_menu.cursor_state = GUI_MAIN_MENU_CURSOR_STATE_DEFAULT;
+
 	gui->pause_menu.enabled = 0;
 	gui->pause_menu.cursor_state = GUI_PAUSE_MENU_CURSOR_STATE_DEFAULT;
+
+	gui->prompt_bool.enabled = 0;
+	gui->prompt_bool.question_text = GUI_PROMPT_BOOL_DEFAULT_QUESTION_TEXT;
+	gui->prompt_bool.yes_text = GUI_PROMPT_BOOL_DEFAULT_YES_TEXT;
+	gui->prompt_bool.no_text = GUI_PROMPT_BOOL_DEFAULT_NO_TEXT;
+	gui->prompt_bool.choice = 0;
 }
 
 int gui_game_render_disabled(struct gui *gui)
 {
-	return (gui->main_menu.enabled && GUI_MAIN_MENU_DISABLE_GAME_RENDER)
-	|| (gui->pause_menu.enabled && GUI_PAUSE_MENU_DISABLE_GAME_RENDER);
+	return gui->main_menu.enabled;
 }

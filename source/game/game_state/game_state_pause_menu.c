@@ -20,8 +20,7 @@ static void on_update(struct game *game)
 	case INPUT_UI_ACTION_SUBMIT:
 		switch (game->gui->pause_menu.cursor_state) {
 		case GUI_PAUSE_MENU_CURSOR_STATE_RESUME:
-			/* TODO: Consider if this should be part of a push/pop stack. */
-			game_set_state(game, &GAME_STATE_DEFAULT);
+			game_pop_state(game);
 			break;
 		case GUI_PAUSE_MENU_CURSOR_STATE_QUIT_TO_MAIN_MENU:
 			game_set_state(game, &GAME_STATE_MAIN_MENU);
@@ -31,8 +30,7 @@ static void on_update(struct game *game)
 		}
 		break;
 	case INPUT_UI_ACTION_TOGGLE_PAUSE_MENU:
-		/* TODO: Consider if this should be part of a push/pop stack. */
-		game_set_state(game, &GAME_STATE_DEFAULT);
+		game_pop_state(game);
 		break;
 	default:
 		break;
