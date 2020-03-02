@@ -1,9 +1,10 @@
 # The Goldband Project (7DRL 2020)
+
+![Screenshot of the Main Menu](https://github.com/andrewgasson/roguelike-7drl-2020/blob/master/document/picture/main_menu.png)
+
 _The Goldband Project_ is a traditional roguelike made for the 7DRL challenge 2020 (#7DRL2020).
 
 To check out the 7DRL challenge, go here: <https://7drl.com/>.
-
-![Screenshot of the Main Menu](https://github.com/andrewgasson/roguelike-7drl-2020/blob/master/document/picture/main_menu.png)
 
 ## Plan
 ### What is the goal?
