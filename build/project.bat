@@ -18,6 +18,6 @@ set source_files=^
 	%source_directory%\gui\*.c ^
 	%source_directory%\input\*.c ^
 	%source_directory%\render\*.c ^
+	%source_directory%\render\render_game\*.c ^
 	%source_directory%\render\render_gui\*.c ^
-	%source_directory%\render\render_layer\*.c ^
 	%source_directory%\world\*.c

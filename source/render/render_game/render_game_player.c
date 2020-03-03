@@ -1,6 +1,6 @@
-#include "render/render_layer/render_layer.h"
+#include "render/render_game/render_game.h"
 
-void render_layer_player(struct render *render)
+void render_game_player(struct render *render)
 {
 	terminal_bkcolor(render->world->player.glyph.background);
 	terminal_color(render->world->player.glyph.foreground);

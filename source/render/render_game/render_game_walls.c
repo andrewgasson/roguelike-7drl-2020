@@ -1,8 +1,8 @@
-#include "render/render_layer/render_layer.h"
+#include "render/render_game/render_game.h"
 
 #include "BearLibTerminal.h"
 
-void render_layer_walls(struct render *render)
+void render_game_walls(struct render *render)
 {
 	int x;
 	int y;

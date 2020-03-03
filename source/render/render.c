@@ -1,7 +1,7 @@
 #include "render/render.h"
 
+#include "render/render_game/render_game.h"
 #include "render/render_gui/render_gui.h"
-#include "render/render_layer/render_layer.h"
 #include <stdlib.h>
 
 struct render *render_create(void)
@@ -40,8 +40,8 @@ void render_update(struct render *render)
 		terminal_layer(0);
 
 		/* Draw game */
-		render_layer_walls(render);
-		render_layer_player(render);
+		render_game_walls(render);
+		render_game_player(render);
 	}
 
 	/* Setup GUI layer */
