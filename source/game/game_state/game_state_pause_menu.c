@@ -23,7 +23,7 @@ static void on_update(struct game *game)
 			game_pop_state(game);
 			break;
 		case GUI_PAUSE_MENU_CURSOR_STATE_QUIT_TO_MAIN_MENU:
-			game_set_state(game, &GAME_STATE_MAIN_MENU);
+			game_push_state(game, &GAME_STATE_PAUSE_MENU_QUIT);
 			break;
 		default:
 			break;

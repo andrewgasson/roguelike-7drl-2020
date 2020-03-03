@@ -36,23 +36,20 @@ void render_update(struct render *render)
 
 	/* Only render game layer if the enabled GUI(s) are non-blocking. */
 	if (!gui_game_render_disabled(render->gui)) {
-		/* Setup draw layer */
-		terminal_layer(0);
-
-		/* Draw game */
 		render_game_walls(render);
 		render_game_player(render);
 	}
 
-	/* Setup GUI layer */
-	terminal_layer(1);
-
-	/* Draw GUI */
+	/* Draw base GUI */
 	if (render->gui->main_menu.enabled)
 		render_gui_main_menu(render);
 	
 	if (render->gui->pause_menu.enabled)
 		render_gui_pause_menu(render);
+
+	/* Draw prompt GUI */
+	if (render->gui->prompt_bool.enabled)
+		render_gui_prompt_bool(render);
 
 	/* Output */
 	terminal_refresh();

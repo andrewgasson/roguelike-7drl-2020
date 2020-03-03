@@ -18,6 +18,9 @@
 #define GUI_PROMPT_BOOL_DEFAULT_YES_TEXT GUI_PROMPT_BOOL_TEXT_YES
 #define GUI_PROMPT_BOOL_DEFAULT_NO_TEXT GUI_PROMPT_BOOL_TEXT_NO
 
+#define GUI_PROMPT_BOOL_INPUT_YES INPUT_UI_ACTION_LEFT
+#define GUI_PROMPT_BOOL_INPUT_NO INPUT_UI_ACTION_RIGHT
+
 struct gui_prompt_bool {
 	int enabled;
 	const char *question_text;
@@ -25,5 +28,7 @@ struct gui_prompt_bool {
 	const char *no_text;
 	int choice;
 };
+
+void gui_prompt_bool_reset(struct gui_prompt_bool *prompt);
 
 #endif

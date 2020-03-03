@@ -7,7 +7,7 @@
 #include "input/input.h"
 #include "world/world.h"
 
-#define GAME_MAX_STATE_COUNT 4
+#define GAME_MAX_STATE_COUNT 8
 
 struct game {
 	struct engine *engine;

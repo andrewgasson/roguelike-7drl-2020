@@ -9,10 +9,8 @@ void render_gui_pause_menu(struct render *render)
 	int y;
 
 	/* Draw menu background. */
-	terminal_layer(0);
 	terminal_bkcolor(color_from_argb(255, 0, 0, 0));
 	terminal_clear_area(3, 0, 22, terminal_state(TK_HEIGHT));
-	terminal_layer(1);
 
 	/* Draw menu text. */
 	padding_left = 4;

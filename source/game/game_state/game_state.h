@@ -15,5 +15,6 @@ const struct game_state GAME_STATE_DEFAULT;
 const struct game_state GAME_STATE_MAIN_MENU;
 const struct game_state GAME_STATE_NEW_GAME;
 const struct game_state GAME_STATE_PAUSE_MENU;
+const struct game_state GAME_STATE_PAUSE_MENU_QUIT;
 
 #endif

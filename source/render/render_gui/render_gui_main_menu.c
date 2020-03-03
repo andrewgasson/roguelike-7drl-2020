@@ -42,18 +42,15 @@ void render_gui_main_menu(struct render *render)
 	padding_left = screen_width - GOLDBAND_TITLE_WIDTH - 2;
 	padding_top = 1;
 
-	terminal_layer(0);
 	terminal_bkcolor(color_from_name("amber"));
 	terminal_color(color_from_argb(255, 0, 0, 0));
 	terminal_clear_area(padding_left - 2, 0, screen_width, screen_height);
-	terminal_layer(1);
 
 	terminal_print(padding_left, padding_top, "THE");
 	padding_top++;
 
-	for (y = 0; y < GOLDBAND_TITLE_HEIGHT; y++) {
+	for (y = 0; y < GOLDBAND_TITLE_HEIGHT; y++)
 		terminal_print(padding_left, y + padding_top, GOLDBAND_TITLE[y]);
-	}
 
 	terminal_print(screen_width - 9, padding_top + GOLDBAND_TITLE_HEIGHT, "PROJECT");
 
@@ -73,6 +70,7 @@ void render_gui_main_menu(struct render *render)
 	padding_left = 4;
 	y = 2;
 
+	terminal_bkcolor(color_from_argb(255, 0, 0, 0));
 	terminal_color(color_from_name("amber"));
 	terminal_print(padding_left, y, CONFIG_GAME_NAME_UPPERCASE);
 	terminal_color(color_from_argb(255, 255, 255, 255));
