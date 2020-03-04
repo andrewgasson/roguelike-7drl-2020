@@ -17,12 +17,9 @@ int map_out_of_bounds(int x, int y)
 
 void map_clear(struct map *map)
 {
-	int x;
-	int y;
+	int i;
 
-	for (y = 0; y < MAP_HEIGHT; y++) {
-		for (x = 0; x < MAP_WIDTH; x++) {
-			map->wall[map_index(x, y)] = 0;
-		}
+	for (i = 0; i < MAP_AREA; i++) {
+		map->wall[i] = 0;
 	}
 }

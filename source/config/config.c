@@ -114,6 +114,8 @@ const struct tk_string_pair tk_string_table[] = {
 	{ TK_ALT, "TK_ALT" }
 };
 
+const char * const CONFIG_DEFAULT_DIRECTORY_SAVE_FOLDER = "test.txt"; /* TODO: folders don't work... */
+
 const struct keybind CONFIG_DEFAULT_KEYBIND_GAME_MOVE_NORTH = { TK_UP, TK_KP_8, 0, 0, 0 };
 const struct keybind CONFIG_DEFAULT_KEYBIND_GAME_MOVE_EAST = { TK_RIGHT, TK_KP_6, 0, 0, 0 };
 const struct keybind CONFIG_DEFAULT_KEYBIND_GAME_MOVE_SOUTH = { TK_DOWN, TK_KP_2, 0, 0, 0 };
@@ -141,8 +143,7 @@ static void config_normalize_string(char *destination, const char *source)
 	destination[i] = '\0';
 }
 
-/* If the key is found, return the key as a string, otherwise returns null.
- */
+/* If the key is found, return the key as a string, otherwise returns NULL. */
 static const char *config_tk_to_string(int tk_key)
 {
 	int i;
@@ -155,33 +156,36 @@ static const char *config_tk_to_string(int tk_key)
 	return NULL;
 }
 
-/* If the string is found, returns the TK key id, otherwise returns -1.
- */
+/* If the string is found, returns the TK key id, otherwise returns -1. */
 static int config_string_to_tk(const char *tk_string)
 {
 	int i;
 	char *normalised_string;
 
-	/* If tk_string is NULL, return nothing. */
 	if (!tk_string)
 		return -1;
 
-	/* Allocate and lowercase tk_string's elements into normalised_string. */
 	normalised_string = malloc(strlen(tk_string) * sizeof(*normalised_string));
 	config_normalize_string(normalised_string, tk_string);
 
-	/* Compare normalised string to each tk_string_table element. If found, 
-	 * return the tk_key id.
-	 */
 	for (i = 0; i < TK_STRING_TABLE_LENGTH; i++) {
 		if (strcmp(normalised_string, tk_string_table[i].string) == 0)
 			return tk_string_table[i].key;
 	}
 
-	/* Deallocate */
 	free(normalised_string);
 
 	return -1;
+}
+
+static void config_load_directory(dictionary *ini_dictionary, const char *ini_key, char *directory)
+{
+	const char *parsed_directory;
+	
+	parsed_directory = iniparser_getstring(ini_dictionary, "directory:save_folder", NULL);
+	
+	if (parsed_directory)
+		strcpy(directory, parsed_directory);
 }
 
 static void config_load_keybind(dictionary *ini_dictionary, const char *ini_key, struct keybind *keybind)
@@ -193,13 +197,12 @@ static void config_load_keybind(dictionary *ini_dictionary, const char *ini_key,
 	int hold_shift;
 	char *key_full_string;
 
-	/* The 32 is additional space for appending the dot struct value, for 
+	/* The 24 is additional space for appending the dot struct value, for 
 	 * example: ".hold_shift" is 11 characters, and would fit within this 
-	 * additional 32 character space.
+	 * additional 24 character space.
 	 */
 	key_full_string = malloc(strlen(ini_key) + 24 * sizeof(*key_full_string));
 
-	/* Append the key with the member, and try and parse the element. */
 	strcpy(key_full_string, ini_key);
 	strcat(key_full_string, ".key");
 	key = config_string_to_tk(iniparser_getstring(ini_dictionary, key_full_string, NULL));
@@ -220,9 +223,6 @@ static void config_load_keybind(dictionary *ini_dictionary, const char *ini_key,
 	strcat(key_full_string, ".hold_shift");
 	hold_shift = iniparser_getboolean(ini_dictionary, key_full_string, -1);
 
-	/* Only reassign a key if it parsed correctly. Otherwise, let it 
-	 * remain as whatever it currently is (probably the default bind).
-	 */
 	if (key != -1)
 		keybind->key = key;
 	
@@ -238,7 +238,6 @@ static void config_load_keybind(dictionary *ini_dictionary, const char *ini_key,
 	if (hold_shift != -1)
 		keybind->hold_shift = hold_shift;
 	
-	/* Deallocate */
 	free(key_full_string);
 }
 
@@ -258,6 +257,8 @@ void config_destroy(struct config *config)
 
 void config_init(struct config *config)
 {
+	strcpy(config->directory.save_folder, CONFIG_DEFAULT_DIRECTORY_SAVE_FOLDER);
+
 	config->keybind.game_move_north = CONFIG_DEFAULT_KEYBIND_GAME_MOVE_NORTH;
 	config->keybind.game_move_east = CONFIG_DEFAULT_KEYBIND_GAME_MOVE_EAST;
 	config->keybind.game_move_south = CONFIG_DEFAULT_KEYBIND_GAME_MOVE_SOUTH;
@@ -275,28 +276,23 @@ void config_load(struct config *config, const char *filepath)
 {
 	dictionary *ini_dictionary;
 
-	/* Reset the config's state. */
+	/* All functions rely on have the default state as a base. */
 	config_init(config);
 
-	/* Try and load the file into an ini dictionary. */
 	ini_dictionary = iniparser_load(filepath);
 
-	/* If the file doesn't exist, create it, and save the new file with the  
-	 * current settings (this will be default because the config should 
-	 * have been reset above).
-	 */
 	if (!ini_dictionary) {
 		config_save(config, filepath);
 		return;
 	}
 
-	/* Try to load the settings from file. */
+	config_load_directory(ini_dictionary, "directory:save_folder", config->directory.save_folder);
+
 	config_load_keybind(ini_dictionary, "keybind:game_move_north", &config->keybind.game_move_north);
 	config_load_keybind(ini_dictionary, "keybind:game_move_east", &config->keybind.game_move_east);
 	config_load_keybind(ini_dictionary, "keybind:game_move_south", &config->keybind.game_move_south);
 	config_load_keybind(ini_dictionary, "keybind:game_move_west", &config->keybind.game_move_west);
 	config_load_keybind(ini_dictionary, "keybind:game_rest", &config->keybind.game_rest);
-
 	config_load_keybind(ini_dictionary, "keybind:ui_up", &config->keybind.ui_up);
 	config_load_keybind(ini_dictionary, "keybind:ui_right", &config->keybind.ui_right);
 	config_load_keybind(ini_dictionary, "keybind:ui_down", &config->keybind.ui_down);
@@ -304,7 +300,6 @@ void config_load(struct config *config, const char *filepath)
 	config_load_keybind(ini_dictionary, "keybind:ui_submit", &config->keybind.ui_submit);
 	config_load_keybind(ini_dictionary, "keybind:ui_toggle_pause_menu", &config->keybind.ui_toggle_pause_menu);
 
-	/* Deallocate */
 	iniparser_freedict(ini_dictionary);
 }
 
@@ -312,14 +307,14 @@ void config_save(struct config *config, const char *filepath)
 {
 	FILE *ini_file;
 
-	/* Create a fresh file. */
 	ini_file = fopen(filepath, "w");
 
-	/* Failed to create the file for some reason. Do nothing. */
 	if (!ini_file)
 		return;
 
-	/* Write contents to the file. key_alternative*/
+	fprintf(ini_file, "[directory]\n");
+	fprintf(ini_file, "save_folder = %s\n\n", config->directory.save_folder);
+
 	fprintf(ini_file, "[keybind]\n");
 	fprintf(ini_file, "game_move_north.key = %s\n", config_tk_to_string(config->keybind.game_move_north.key));
 	fprintf(ini_file, "game_move_north.key_alternative = %s\n", config_tk_to_string(config->keybind.game_move_north.key_alternative));
@@ -385,8 +380,7 @@ void config_save(struct config *config, const char *filepath)
 	fprintf(ini_file, "ui_toggle_pause_menu.key_alternative = %s\n", config_tk_to_string(config->keybind.ui_toggle_pause_menu.key_alternative));
 	fprintf(ini_file, "ui_toggle_pause_menu.hold_alt = %s\n", INT_TO_BOOLSTRING(config->keybind.ui_toggle_pause_menu.hold_alt));
 	fprintf(ini_file, "ui_toggle_pause_menu.hold_shift = %s\n", INT_TO_BOOLSTRING(config->keybind.ui_toggle_pause_menu.hold_shift));
-	fprintf(ini_file, "ui_toggle_pause_menu.hold_control = %s\n\n", INT_TO_BOOLSTRING(config->keybind.ui_toggle_pause_menu.hold_control));
+	fprintf(ini_file, "ui_toggle_pause_menu.hold_control = %s\n", INT_TO_BOOLSTRING(config->keybind.ui_toggle_pause_menu.hold_control));
 
-	/* Deallocate */
 	fclose(ini_file);
 }

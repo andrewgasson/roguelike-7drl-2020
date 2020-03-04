@@ -19,7 +19,8 @@ void game_destroy(struct game *game)
 }
 
 void game_init(
-	struct game *game, 
+	struct game *game,
+	struct config *config,
 	struct engine *engine,
 	struct gui *gui,
 	struct input *input,
@@ -27,6 +28,7 @@ void game_init(
 {
 	int i;
 
+	game->config = config;
 	game->engine = engine;
 	game->gui = gui;
 	game->input = input;

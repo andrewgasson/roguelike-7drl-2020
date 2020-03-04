@@ -1,6 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include "config/config.h"
 #include "engine/engine.h"
 #include "game/game_state/game_state.h"
 #include "gui/gui.h"
@@ -10,6 +11,7 @@
 #define GAME_MAX_STATE_COUNT 8
 
 struct game {
+	struct config *config;
 	struct engine *engine;
 	struct gui *gui;
 	struct input *input;
@@ -24,6 +26,7 @@ void game_destroy(struct game *game);
 
 void game_init(
 	struct game *game,
+	struct config *config,
 	struct engine *engine,
 	struct gui *gui,
 	struct input *input,

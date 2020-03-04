@@ -10,7 +10,13 @@
 #define CONFIG_GAME_NAME_UPPERCASE "THE GOLDBAND PROJECT"
 #define CONFIG_GAME_VERSION "0.4"
 
+/* Leave room for appending to the directory. */
+#define CONFIG_SAVE_FOLDER_LENGTH 128
+
 struct config {
+	struct {
+		char save_folder[CONFIG_SAVE_FOLDER_LENGTH];
+	} directory;
 	struct {
 		struct keybind game_move_north;
 		struct keybind game_move_east;
@@ -25,6 +31,8 @@ struct config {
 		struct keybind ui_toggle_pause_menu;
 	} keybind;
 };
+
+const char * const CONFIG_DEFAULT_DIRECTORY_SAVE_FOLDER;
 
 const struct keybind CONFIG_DEFAULT_KEYBIND_GAME_MOVE_NORTH;
 const struct keybind CONFIG_DEFAULT_KEYBIND_GAME_MOVE_EAST;

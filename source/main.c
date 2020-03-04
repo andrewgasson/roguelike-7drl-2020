@@ -7,15 +7,17 @@
 #include "world/world.h"
 #include "BearLibTerminal.h"
 
+#include <stdio.h>
+
 int main(void)
 {
-	struct config *config;
-	struct engine *engine;
-	struct game *game;
-	struct gui *gui;
-	struct input *input;
-	struct render *render;
-	struct world *world;
+	static struct config *config;
+	static struct engine *engine;
+	static struct game *game;
+	static struct gui *gui;
+	static struct input *input;
+	static struct render *render;
+	static struct world *world;
 
 	config = config_create();
 	engine = engine_create();
@@ -27,13 +29,13 @@ int main(void)
 
 	config_init(config);
 	engine_init(engine, game, input, render);
-	game_init(game, engine, gui, input, world);
+	game_init(game, config, engine, gui, input, world);
 	gui_init(gui);
 	input_init(input, config);
 	render_init(render, gui, world);
 	world_init(world);
 
-	config_load(config, "config.ini");
+	config_load(config, CONFIG_DEFAULT_FILEPATH);
 	game_set_state(game, &GAME_STATE_MAIN_MENU);
 
 	terminal_open();

@@ -18,4 +18,10 @@ void world_destroy(struct world *world);
 
 void world_init(struct world *world);
 
+/* Returns 1 if the file could be loaded, and 0 otherwise. */
+int world_load(struct world *world, const char *filepath);
+
+/* Returns 1 if the file could be saved, and 0 otherwise. */
+int world_save(struct world *world, const char *filepath);
+
 #endif
