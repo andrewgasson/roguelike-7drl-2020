@@ -33,6 +33,7 @@ int main(void)
 	render_init(render, gui, world);
 	world_init(world);
 
+	config_load(config, "config.ini");
 	game_set_state(game, &GAME_STATE_MAIN_MENU);
 
 	terminal_open();

@@ -21,4 +21,5 @@ set source_files=^
 	%source_directory%\render\color_tool\*.c ^
 	%source_directory%\render\render_game\*.c ^
 	%source_directory%\render\render_gui\*.c ^
-	%source_directory%\world\*.c
+	%source_directory%\world\*.c ^
+	%external_directory%\iniparser\*.c

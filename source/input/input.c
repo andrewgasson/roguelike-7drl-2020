@@ -7,6 +7,7 @@
 
 struct input_key_state {
 	int key_press;
+	int alt_held;
 	int control_held;
 	int shift_held;
 };
@@ -15,14 +16,17 @@ static int input_keybind_pressed(
 	const struct keybind *keybind,
 	const struct input_key_state *key_state)
 {
+	if (keybind->key != key_state->key_press
+	&& keybind->key_alternative != key_state->key_press)
+		return 0;
+
+	if (keybind->hold_alt != key_state->alt_held)
+		return 0;
+
 	if (keybind->hold_control != key_state->control_held)
 		return 0;
 	
 	if (keybind->hold_shift != key_state->shift_held)
-		return 0;
-	
-	if (keybind->terminal_key_1 != key_state->key_press
-	&& keybind->terminal_key_2 != key_state->key_press)
 		return 0;
 
 	return 1;
@@ -61,6 +65,7 @@ void input_update(struct input *input)
 
 	/* Store input state. */
 	key_state.key_press = terminal_read();
+	key_state.alt_held = terminal_state(TK_ALT);
 	key_state.control_held = terminal_state(TK_CONTROL);
 	key_state.shift_held = terminal_state(TK_SHIFT);
 

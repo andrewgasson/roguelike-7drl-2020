@@ -2,10 +2,11 @@
 #define KEYBIND_H
 
 struct keybind {
-	int hold_shift;
+	int key;
+	int key_alternative;
+	int hold_alt;
 	int hold_control;
-	int terminal_key_1;
-	int terminal_key_2;
+	int hold_shift;
 };
 
 #endif

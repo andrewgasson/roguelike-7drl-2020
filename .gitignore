@@ -3,3 +3,4 @@
 
 # Build output files
 *.exe
+*.ini
