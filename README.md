@@ -1,4 +1,4 @@
-# The Goldband Project (7DRL 2020)
+# The Goldband Project (Unfinished) (7DRL 2020)
 
 ![Screenshot of the Main Menu](https://github.com/andrewgasson/roguelike-7drl-2020/blob/master/document/picture/main_menu.png)
 
@@ -35,6 +35,7 @@ Currently, the character can move around a box, and will collide with the box's 
 - Day #2 focused adding GUI state and rendering, cleaning the code architecture, and clarifying the gameplay (via private game design document based on gameplay.md in the document folder).
 - Day #3 focused on creating a proper main menu and pause menu, preparing for GUI prompts (also known as modals or dialogs in some systems), and changing game state to use a push and pop stack, rather than just a set, which is necessary for deep menu hierarchies, and retaining their state (for example: default game state <-> pause menu <-> setting menu <-> sub-setting menu). Also cleaned up the README.
 - Day #4 focused on adding prompt function (and a bool prompt with associated controls and render), testing the new game state stack, and creating a color tool that allows for the ability to add a layer of transparency over the pre-rendered terminal scene, which helps prompts pop out. The end of the day focused on preparation for saving and loading the config (as .ini) and game (as binary).
+- Days #5, #6, and #7 focused on the config .ini, and more importantly, an attempt to track down a bug that sometimes causes the application to hang on close, or just not open at all. This resulted in leaving no time for actual gameplay elements.
 
 ## TODO
 - Save and load config to and from file.
@@ -63,3 +64,10 @@ Currently, the character can move around a box, and will collide with the box's 
 	- Magic (?)
 	- Stat effects
 	- Enemy templates
+
+## Final Thoughts
+A bug lead to the lack adding proper gameplay features before the jam ended. However, a lot was learned in terms of program structure (in the future, I plan to separate source files from includes for added clarity), and I made a basic config load system and GUI rendering process, which I haven't done before. A bug surrounding (or involving) iniparser also lead me to creating my own ini parser, which I will use in future projects.
+
+Overall, there's a foundation and idea here, and I plan on at least attempting to complete Goldband, despite the ending of the jam. However, this new project will be rebuilt from scratch (again, but with lessons learned), and will exist in a different repository.
+
+The remains of this project now exist only for historical reasons.
