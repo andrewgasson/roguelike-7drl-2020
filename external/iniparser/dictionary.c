@@ -182,22 +182,47 @@ dictionary * dictionary_new(size_t size)
   Deallocate a dictionary object and all memory associated to it.
  */
 /*--------------------------------------------------------------------------*/
-void dictionary_del(dictionary * d)
-{
-    ssize_t  i ;
+#include <inttypes.h>
 
-    if (d==NULL) return ;
-    for (i=0 ; i<d->size ; i++) {
-        if (d->key[i]!=NULL)
+void dictionary_del(dictionary *d)
+{
+    ssize_t i;
+
+    printf("$$ call: dictionary_del()\n");
+
+    if (!d) {
+        printf("$$ dictionary was null, returning...\n");
+        return;
+    }
+
+    printf("$$ d->size = %"PRId64"\n", d->size);
+    printf("$$ d->n = %d\n", d->n);
+    printf("~~ freeing: ");
+
+    for (i = 0; i < d->size; i++) {
+        printf("%"PRId64", ", i);
+
+        if (d->key[i])
             free(d->key[i]);
-        if (d->val[i]!=NULL)
+
+        if (d->val[i])
             free(d->val[i]);
     }
+
+    printf("\n$$ loop ended.\n");
+
+    printf("$$ call: free(d->val)\n");
     free(d->val);
+    printf("$$ call: free(d->key)\n");
     free(d->key);
+    printf("$$ call: free(d->hash)\n");
     free(d->hash);
+    printf("$$ call: free(d)\n");
     free(d);
-    return ;
+
+    printf("$$ fin.\n");
+
+    return;
 }
 
 /*-------------------------------------------------------------------------*/

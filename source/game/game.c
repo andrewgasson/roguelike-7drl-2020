@@ -1,6 +1,7 @@
 #include "game/game.h"
 
 #include "game/game_state/game_state.h"
+#include "utility/stdio_ext.h"
 #include <stddef.h>
 #include <stdlib.h>
 
@@ -46,26 +47,39 @@ void game_set_state(struct game *game, const struct game_state *state)
 {
 	int i;
 
+	printf("    internal: game_set_state()\n");
+
 	/* Remove all states, including the base state. */
 	for (i = GAME_MAX_STATE_COUNT - 1; i >= 0; i--) {
 		if (game->state[i]) {
+			printf("        game->state[%d] found, stopping and nullifying...", i);
+
 			if (game->state[i]->stop)
 				game->state[i]->stop(game);
 
 			game->state[i] = NULL;
+		} else {
+			printf("        game->state[%d] is null, continuing...\n", i);
 		}
 	}
 
 	game->top_state_index = 0;
 
+	printf("        top_state_index is 0\n");
+
 	/* If the new state is NULL, we don't need to do anything. */
 	if (state == NULL)
 		return;
 
+	printf("        game->state[0] = state;\n");
 	game->state[0] = state;
 
-	if (game->state[0]->start)
+	if (game->state[0]->start) {
+		printf("        call: game->state[0]->state();\n");
 		game->state[0]->start(game);
+	}
+
+	printf("        fin.\n");
 }
 
 /* Pushes the state onto the stack. Returns 0 if the stack as full, and 1 
@@ -139,4 +153,38 @@ void game_update(struct game *game)
 	/* Update top game state. */
 	if (game->state[game->top_state_index]->update)
 		game->state[game->top_state_index]->update(game);
+}
+
+int game_load(struct game *game)
+{
+	FILE *file;
+
+	/* TODO: Save depending on selected character. */
+	file = fopen_mkdir(game->config->directory.save_directory, "game_1_main.sav", "r");
+
+	if (!file)
+		return 0;
+	
+	world_load(game->world, file);
+
+	fclose(file);
+
+	return 1;
+}
+
+int game_save(struct game *game)
+{
+	FILE *file;
+
+	/* TODO: Save depending on selected character. */
+	file = fopen_mkdir(game->config->directory.save_directory, "game_1_main.sav", "w");
+
+	if (!file)
+		return 0;
+
+	world_save(game->world, file);
+
+	fclose(file);
+
+	return 1;
 }

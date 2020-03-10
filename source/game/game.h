@@ -60,4 +60,10 @@ const struct game_state *game_current_state(struct game *game);
 
 void game_update(struct game *game);
 
+/* Returns 1 if the file could be loaded, and 0 otherwise. */
+int game_load(struct game *game);
+
+/* Returns 1 if the file could be saved, and 0 otherwise. */
+int game_save(struct game *game);
+
 #endif

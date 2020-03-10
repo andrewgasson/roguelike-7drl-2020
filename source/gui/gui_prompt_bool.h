@@ -21,6 +21,8 @@
 #define GUI_PROMPT_BOOL_INPUT_YES INPUT_UI_ACTION_LEFT
 #define GUI_PROMPT_BOOL_INPUT_NO INPUT_UI_ACTION_RIGHT
 
+/* TODO: Specify max lengths for question and yes, no responses. */
+
 struct gui_prompt_bool {
 	int enabled;
 	const char *question_text;

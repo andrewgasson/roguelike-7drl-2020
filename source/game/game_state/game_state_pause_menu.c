@@ -23,12 +23,12 @@ static void on_update(struct game *game)
 			game_pop_state(game);
 			break;
 		case GUI_PAUSE_MENU_CURSOR_STATE_SAVE_GAME:
-			if (world_save(game->world, game->config->directory.save_folder))
+			if (game_save(game))
 				game_pop_state(game);
 
 			break;
 		case GUI_PAUSE_MENU_CURSOR_STATE_LOAD_GAME:
-			if (world_load(game->world, game->config->directory.save_folder))
+			if (game_load(game))
 				game_pop_state(game);
 
 			break;

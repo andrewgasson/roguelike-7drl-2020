@@ -114,7 +114,7 @@ const struct tk_string_pair tk_string_table[] = {
 	{ TK_ALT, "TK_ALT" }
 };
 
-const char * const CONFIG_DEFAULT_DIRECTORY_SAVE_FOLDER = "test.txt"; /* TODO: folders don't work... */
+const char * const CONFIG_DEFAULT_DIRECTORY_SAVE_DIRECTORY = "save";
 
 const struct keybind CONFIG_DEFAULT_KEYBIND_GAME_MOVE_NORTH = { TK_UP, TK_KP_8, 0, 0, 0 };
 const struct keybind CONFIG_DEFAULT_KEYBIND_GAME_MOVE_EAST = { TK_RIGHT, TK_KP_6, 0, 0, 0 };
@@ -182,8 +182,8 @@ static void config_load_directory(dictionary *ini_dictionary, const char *ini_ke
 {
 	const char *parsed_directory;
 	
-	parsed_directory = iniparser_getstring(ini_dictionary, "directory:save_folder", NULL);
-	
+	parsed_directory = iniparser_getstring(ini_dictionary, "directory:save_directory", NULL);
+
 	if (parsed_directory)
 		strcpy(directory, parsed_directory);
 }
@@ -257,7 +257,7 @@ void config_destroy(struct config *config)
 
 void config_init(struct config *config)
 {
-	strcpy(config->directory.save_folder, CONFIG_DEFAULT_DIRECTORY_SAVE_FOLDER);
+	strcpy(config->directory.save_directory, CONFIG_DEFAULT_DIRECTORY_SAVE_DIRECTORY);
 
 	config->keybind.game_move_north = CONFIG_DEFAULT_KEYBIND_GAME_MOVE_NORTH;
 	config->keybind.game_move_east = CONFIG_DEFAULT_KEYBIND_GAME_MOVE_EAST;
@@ -274,20 +274,28 @@ void config_init(struct config *config)
 
 void config_load(struct config *config, const char *filepath)
 {
+	FILE *dumper_file;
 	dictionary *ini_dictionary;
 
-	/* All functions rely on have the default state as a base. */
-	config_init(config);
+	printf("    call: config_load(%s)\n", filepath);
 
+	/* All functions rely on have the default state as a base. */
+	printf("        call: config_init()\n");
+	config_init(config);
+	
+	printf("        call: iniparser_load()\n");
 	ini_dictionary = iniparser_load(filepath);
 
 	if (!ini_dictionary) {
+		printf("        ini_dictionary not found, enterring config_save()\n");
 		config_save(config, filepath);
 		return;
 	}
 
-	config_load_directory(ini_dictionary, "directory:save_folder", config->directory.save_folder);
+	printf("        load: directory\n");
+	config_load_directory(ini_dictionary, "directory:save_directory", config->directory.save_directory);
 
+	printf("        load: keybind\n");
 	config_load_keybind(ini_dictionary, "keybind:game_move_north", &config->keybind.game_move_north);
 	config_load_keybind(ini_dictionary, "keybind:game_move_east", &config->keybind.game_move_east);
 	config_load_keybind(ini_dictionary, "keybind:game_move_south", &config->keybind.game_move_south);
@@ -300,7 +308,15 @@ void config_load(struct config *config, const char *filepath)
 	config_load_keybind(ini_dictionary, "keybind:ui_submit", &config->keybind.ui_submit);
 	config_load_keybind(ini_dictionary, "keybind:ui_toggle_pause_menu", &config->keybind.ui_toggle_pause_menu);
 
+	printf("        DUMP: iniparser\n");
+	dumper_file = fopen("dump.ini", "w");
+	iniparser_dump_ini(ini_dictionary, dumper_file);
+	fclose(dumper_file);
+
+	printf("        call: iniparser_freedict\n");
 	iniparser_freedict(ini_dictionary);
+
+	printf("        fin.");
 }
 
 void config_save(struct config *config, const char *filepath)
@@ -313,7 +329,7 @@ void config_save(struct config *config, const char *filepath)
 		return;
 
 	fprintf(ini_file, "[directory]\n");
-	fprintf(ini_file, "save_folder = %s\n\n", config->directory.save_folder);
+	fprintf(ini_file, "save_directory = %s\n\n", config->directory.save_directory);
 
 	fprintf(ini_file, "[keybind]\n");
 	fprintf(ini_file, "game_move_north.key = %s\n", config_tk_to_string(config->keybind.game_move_north.key));

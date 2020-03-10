@@ -23,10 +23,9 @@ static void on_update(struct game *game)
 			game_set_state(game, &GAME_STATE_NEW_GAME);
 			break;
 		case GUI_MAIN_MENU_CURSOR_STATE_LOAD_GAME:
-			if (world_load(game->world, game->config->directory.save_folder))
+			if (game_load(game))
 				game_set_state(game, &GAME_STATE_DEFAULT);
-			
-			/* TODO: Else would probably be some kind of message prompt; probably best to have a different loading screen. */
+			/* TODO: else: would probably be some kind of message prompt; probably best to have a different loading screen (character selection)... */
 
 			break;
 		case GUI_MAIN_MENU_CURSOR_STATE_QUIT:

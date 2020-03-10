@@ -3,19 +3,19 @@
 
 #include "config/keybind.h"
 
-#define CONFIG_DEFAULT_FILEPATH "config.txt"
+#define CONFIG_DEFAULT_FILEPATH "config.ini"
 
 #define CONFIG_GAME_AUTHOR_UPPERCASE "ANDREW GASSON"
 #define CONFIG_GAME_JAM "7DRL 2020"
 #define CONFIG_GAME_NAME_UPPERCASE "THE GOLDBAND PROJECT"
-#define CONFIG_GAME_VERSION "0.4"
+#define CONFIG_GAME_VERSION "0.5"
 
 /* Leave room for appending to the directory. */
-#define CONFIG_SAVE_FOLDER_LENGTH 128
+#define CONFIG_SAVE_DIRECTORY_LENGTH 128
 
 struct config {
 	struct {
-		char save_folder[CONFIG_SAVE_FOLDER_LENGTH];
+		char save_directory[CONFIG_SAVE_DIRECTORY_LENGTH];
 	} directory;
 	struct {
 		struct keybind game_move_north;
@@ -32,7 +32,7 @@ struct config {
 	} keybind;
 };
 
-const char * const CONFIG_DEFAULT_DIRECTORY_SAVE_FOLDER;
+const char * const CONFIG_DEFAULT_DIRECTORY_SAVE_DIRECTORY;
 
 const struct keybind CONFIG_DEFAULT_KEYBIND_GAME_MOVE_NORTH;
 const struct keybind CONFIG_DEFAULT_KEYBIND_GAME_MOVE_EAST;
